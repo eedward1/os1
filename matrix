@@ -1,0 +1,33 @@
+#!/bin/bash
+
+dims () {
+    rows=0
+    cols=0
+   
+    while read numbRows
+    do
+        rows=$(expr $rows + 1) 
+        if [ $cols -eq 0 ]
+        then
+            for col in $numbRows
+            do
+                cols=$(expr $cols + 1)
+            done
+        fi
+    done < $1
+
+    echo "$rows $cols"
+}
+
+datafilepath="datafile$$"
+if [ "$#" = "1" ]
+then
+    cat > "$datafilepath"
+    $1 $datafilepath 
+elif [ "$#" = "2" ]
+then
+    $1 "${@:2}"
+    datafilepath=$2
+fi
+#rm $datafilepath
+find -regex ".*$$" -exec rm {} \;

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+dims () {
+    # change to $2 when implementing in program
+    rows=0
+    cols=0
+    read firstRow < $1
+    # echo "$firstRow"
+   
+    while read numbRows
+    do
+        if [ $cols -eq 0 ]
+        then
+            for col in $numbRows
+            do
+                cols=$(expr $cols + 1)
+            done
+        fi
+
+        rows=$(expr $rows + 1) 
+    done < $1
+
+    echo "$rows $cols"
+}
+
+dims $1
